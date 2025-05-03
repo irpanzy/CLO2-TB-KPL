@@ -11,6 +11,15 @@ const ProductService = {
       where: where,
       skip: skip,
       take: limit,
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        category: true,
+        image: true,
+        createdAt: true,
+        updatedAt: true,
+      },
     });
   },
 
