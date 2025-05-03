@@ -5,41 +5,64 @@ const ProductService = require("../services/productService");
 const createProduct = async (req, res) => {
   try {
     const { name, price, category } = req.body;
+
     if (!name || !price || !category) {
-      return res.status(400).json({
-        error: "All fields (name, price, and category) are required",
-      });
+      if (req.headers.accept && req.headers.accept.includes("html")) {
+        req.flash("error", "Semua field wajib diisi.");
+        return res.redirect("/view/products/create");
+      } else {
+        return res.status(400).json({
+          error: "All fields (name, price, and category) are required",
+        });
+      }
     }
+
     if (!req.file) {
-      return res.status(400).json({ error: "Product image is required" });
+      if (req.headers.accept && req.headers.accept.includes("html")) {
+        req.flash("error", "Gambar produk wajib diunggah.");
+        return res.redirect("/view/products/create");
+      } else {
+        return res.status(400).json({ error: "Product image is required" });
+      }
     }
-    // Upload to ImageKit
+
     const uploadResult = await imagekit.upload({
       file: req.file.buffer,
       fileName: req.file.originalname,
     });
-    // Create product with image URL
+
     const newProduct = await ProductService.create({
       name,
       price: parseFloat(price),
       category,
       image: uploadResult.url,
     });
-    return res.status(201).json({
-      message: "Product created successfully with image",
-      data: newProduct,
-    });
+
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      req.flash("success", "Produk berhasil ditambahkan.");
+      return res.redirect("/view/products");
+    } else {
+      return res.status(201).json({
+        message: "Product created successfully with image",
+        data: newProduct,
+      });
+    }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error: "Failed to create product", details: err.message });
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      req.flash("error", "Gagal menambahkan produk.");
+      return res.redirect("/view/products/create");
+    } else {
+      return res
+        .status(500)
+        .json({ error: "Failed to create product", details: err.message });
+    }
   }
 };
 
 // Get all products with filtering and pagination
 const getAllProducts = async (req, res) => {
   try {
-    const { page = 1, limit = 10, category } = req.query;
+    const { page = 1, limit = 8, category } = req.query;
     const products = await ProductService.getAll({
       page: parseInt(page),
       limit: parseInt(limit),
@@ -84,9 +107,14 @@ const updateProduct = async (req, res) => {
     const { name, price, category } = req.body;
 
     if (!name || !price || !category) {
-      return res
-        .status(400)
-        .json({ error: "All fields (name, price, and category) are required" });
+      if (req.headers.accept && req.headers.accept.includes("html")) {
+        req.flash("error", "Semua field wajib diisi.");
+        return res.redirect(`/products/${id}/edit`);
+      } else {
+        return res.status(400).json({
+          error: "All fields (name, price, and category) are required",
+        });
+      }
     }
 
     let updatedData = {
@@ -95,7 +123,6 @@ const updateProduct = async (req, res) => {
       category,
     };
 
-    // Jika ada file baru, upload ke ImageKit
     if (req.file) {
       const uploadResult = await imagekit.upload({
         file: req.file.buffer,
@@ -109,13 +136,25 @@ const updateProduct = async (req, res) => {
       updatedData
     );
 
-    return res
-      .status(200)
-      .json({ message: "Product updated successfully", data: updatedProduct });
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      req.flash("success", "Produk berhasil diperbarui.");
+      return res.redirect("/view/products");
+    } else {
+      return res.status(200).json({
+        message: "Product updated successfully",
+        data: updatedProduct,
+      });
+    }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error: "Failed to update product", details: err.message });
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      req.flash("error", "Gagal memperbarui produk.");
+      return res.redirect(`/products/${req.params.id}/edit`);
+    } else {
+      return res.status(500).json({
+        error: "Failed to update product",
+        details: err.message,
+      });
+    }
   }
 };
 
@@ -124,11 +163,53 @@ const deleteProduct = async (req, res) => {
   try {
     const { id } = req.params;
     await ProductService.delete(parseInt(id));
-    return res.status(200).json({ message: "Product deleted successfully" });
+
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      // Jika dari browser/EJS form
+      req.flash("success", "Produk berhasil dihapus.");
+      return res.redirect("/view/products");
+    } else {
+      // Jika dari API client seperti Postman
+      return res.status(200).json({ message: "Product deleted successfully" });
+    }
   } catch (err) {
-    return res
-      .status(500)
-      .json({ error: "Failed to delete product", details: err.message });
+    if (req.headers.accept && req.headers.accept.includes("html")) {
+      req.flash("error", "Gagal menghapus produk.");
+      return res.redirect("/view/products");
+    } else {
+      return res.status(500).json({
+        error: "Failed to delete product",
+        details: err.message,
+      });
+    }
+  }
+};
+
+const renderProductList = async (req, res) => {
+  try {
+    const { page = 1, limit = 8, category } = req.query;
+
+    const products = await ProductService.getAll({
+      page: parseInt(page),
+      limit: parseInt(limit),
+      category,
+    });
+
+    const totalProducts = await ProductService.count({ category });
+    const totalPages = Math.ceil(totalProducts / limit);
+
+    res.render("products/index", {
+      title: "Daftar Produk",
+      products,
+      currentPage: parseInt(page),
+      totalPages,
+      success_msg: req.flash("success"),
+      error_msg: req.flash("error"),
+    });
+  } catch (err) {
+    console.error("Gagal memuat produk:", err);
+    req.flash("error", "Terjadi kesalahan saat memuat produk.");
+    res.redirect("/");
   }
 };
 
@@ -138,4 +219,5 @@ module.exports = {
   getProductById,
   updateProduct,
   deleteProduct,
+  renderProductList,
 };
