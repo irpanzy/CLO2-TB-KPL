@@ -2,14 +2,13 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const ProductService = {
-  getAll: async ({ page = 1, limit = 10, category }) => {
+  getAll: async ({ page = 1, limit = 10, category } = {}) => {
     const skip = (page - 1) * limit;
+    const filter = category ? { category } : {};
 
-    const where = category ? { category: category } : {};
-
-    return await prisma.product.findMany({
-      where: where,
-      skip: skip,
+    return prisma.product.findMany({
+      where: filter,
+      skip,
       take: limit,
       select: {
         id: true,
@@ -24,28 +23,22 @@ const ProductService = {
   },
 
   create: async (data) => {
-    return await prisma.product.create({
-      data,
-    });
+    return prisma.product.create({ data });
   },
 
   getById: async (id) => {
-    return await prisma.product.findUnique({
-      where: { id },
-    });
+    return prisma.product.findUnique({ where: { id } });
   },
 
   update: async (id, data) => {
-    return await prisma.product.update({
+    return prisma.product.update({
       where: { id },
       data,
     });
   },
 
   delete: async (id) => {
-    return await prisma.product.delete({
-      where: { id },
-    });
+    return prisma.product.delete({ where: { id } });
   },
 };
 

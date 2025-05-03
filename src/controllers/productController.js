@@ -81,18 +81,34 @@ const getProductById = async (req, res) => {
 const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, price, category, image } = req.body;
+    const { name, price, category } = req.body;
+
     if (!name || !price || !category) {
       return res
         .status(400)
         .json({ error: "All fields (name, price, and category) are required" });
     }
-    const updatedProduct = await ProductService.update(parseInt(id), {
+
+    let updatedData = {
       name,
       price: parseFloat(price),
       category,
-      ...(image && { image }),
-    });
+    };
+
+    // Jika ada file baru, upload ke ImageKit
+    if (req.file) {
+      const uploadResult = await imagekit.upload({
+        file: req.file.buffer,
+        fileName: req.file.originalname,
+      });
+      updatedData.image = uploadResult.url;
+    }
+
+    const updatedProduct = await ProductService.update(
+      parseInt(id),
+      updatedData
+    );
+
     return res
       .status(200)
       .json({ message: "Product updated successfully", data: updatedProduct });
