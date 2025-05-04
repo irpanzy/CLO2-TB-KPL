@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Management System</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary: #2d3e50;
+        --secondary: #e74c3c;
+        --accent: #27ae60;
+        --light: #f8f9fa;
+        --dark: #333;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Montserrat", sans-serif;
+        background-color: var(--light);
+        color: var(--dark);
+        line-height: 1.6;
+      }
+
+      header {
+        background-color: var(--primary);
+        padding: 1.5rem 0;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 100;
+        box-shadow: var(--shadow);
+      }
+
+      .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .flex {
+        display: flex;
+      }
+
+      .justify-between {
+        justify-content: space-between;
+      }
+
+      .items-center {
+        align-items: center;
+      }
+
+      .nav-logo {
+        color: white;
+        font-size: 1.8rem;
+        font-weight: bold;
+        text-decoration: none;
+      }
+
+      .nav-logo span {
+        color: var(--secondary);
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 2rem;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+      }
+
+      .nav-links a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+      }
+
+      .hero {
+        background: linear-gradient(135deg, var(--primary) 0%, #34495e 100%);
+        color: white;
+        padding: 8rem 0 5rem;
+        text-align: center;
+        margin-top: 4rem;
+      }
+
+      .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .hero p {
+        font-size: 1.2rem;
+        max-width: 700px;
+        margin: 0 auto 2rem;
+        opacity: 0.9;
+      }
+
+      .btn {
+        display: inline-block;
+        background-color: var(--secondary);
+        color: white;
+        padding: 0.8rem 2rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+      }
+
+      .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .btn-accent {
+        background-color: var(--accent);
+        margin-left: 1rem;
+      }
+
+      .features {
+        padding: 5rem 0;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2.2rem;
+        color: var(--primary);
+      }
+
+      .section-title::after {
+        content: "";
+        display: block;
+        width: 100px;
+        height: 4px;
+        background-color: var(--secondary);
+        margin: 0.8rem auto 0;
+        border-radius: 2px;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .feature-card {
+        background-color: white;
+        border-radius: 10px;
+        padding: 2rem;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        background-color: var(--light);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem;
+      }
+
+      .feature-icon svg {
+        width: 35px;
+        height: 35px;
+      }
+
+      .feature-title {
+        margin: 1rem 0;
+        color: var(--primary);
+      }
+
+      .feature-text {
+        color: #666;
+        margin-bottom: 1.5rem;
+      }
+
+      .quick-access {
+        padding: 5rem 0;
+        background-color: #f1f5f9;
+      }
+
+      .access-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+        margin-top: 3rem;
+      }
+
+      .access-card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        padding: 2rem;
+        transition: var(--transition);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .access-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background-color: var(--primary);
+      }
+
+      .access-card:nth-child(2)::before {
+        background-color: var(--secondary);
+      }
+
+      .access-card:nth-child(3)::before {
+        background-color: var(--accent);
+      }
+
+      .access-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .access-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .access-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
+      }
+
+      .access-btn {
+        display: inline-block;
+        background-color: var(--light);
+        color: var(--primary);
+        border: 2px solid var(--primary);
+        padding: 0.5rem 1.5rem;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: bold;
+        transition: var(--transition);
+      }
+
+      .access-btn:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      footer {
+        background-color: var(--primary);
+        color: white;
+        padding: 1.5rem 0;
+        text-align: center;
+      }
+
+      .footer-links {
+        display: flex;
+        justify-content: center;
+        list-style: none;
+        margin: 1.5rem 0;
+      }
+
+      .footer-links li {
+        margin: 0 1rem;
+      }
+
+      .footer-links a {
+        color: white;
+        text-decoration: none;
+        transition: var(--transition);
+      }
+
+      .footer-links a:hover {
+        color: var(--secondary);
+      }
+
+      .copyright {
+        margin-top: 2rem;
+        font-size: 1rem;
+        opacity: 0.7;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .hero h1 {
+          font-size: 2.5rem;
+        }
+
+        .mobile-menu-btn {
+          display: block;
+          background: none;
+          border: none;
+          color: white;
+          font-size: 1.5rem;
+          cursor: pointer;
+        }
+
+        .nav-links {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          width: 100%;
+          background-color: var(--primary);
+          flex-direction: column;
+          padding: 2rem 0;
+          transition: var(--transition);
+        }
+
+        .nav-links.active {
+          left: 0;
+        }
+
+        .nav-links li {
+          margin: 1rem 0;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .hero h1 {
+          font-size: 2rem;
+        }
+
+        .btn {
+          display: block;
+          width: 80%;
+          margin: 1rem auto;
+        }
+      }
+
+      /* Mobile Menu Button */
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Animation for feature cards */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .feature-card {
+        animation: fadeInUp 0.5s ease forwards;
+      }
+
+      .feature-card:nth-child(2) {
+        animation-delay: 0.2s;
+      }
+
+      .feature-card:nth-child(3) {
+        animation-delay: 0.4s;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header & Navigation -->
+    <header>
+      <div class="container flex justify-between items-center">
+        <a href="/" class="nav-logo">Dashboard<span>MS</span></a>
+        <button class="mobile-menu-btn">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
+          </svg>
+        </button>
+        <!-- <ul class="nav-links">
+        <li><a href="/">Beranda</a></li>
+        <li><a href="/products">Produk</a></li>
+        <li><a href="/users">Pengguna</a></li>
+        <li><a href="/about">Tentang</a></li>
+        <li><a href="/contact">Kontak</a></li>
+      </ul> -->
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="container">
+        <h1>Dashboard Management System</h1>
+        <p>
+          Platform manajemen terintegrasi untuk mengelola produk dan pengguna
+          dengan mudah, cepat, dan efisien.
+        </p>
+        <div class="hero-buttons">
+          <a href="/view/products" class="btn">Lihat Produk</a>
+          <a href="/view/users" class="btn btn-accent">Kelola Pengguna</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+      <div class="container">
+        <h2 class="section-title">Fitur Utama</h2>
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#2d3e50"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path
+                  d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                ></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+              </svg>
+            </div>
+            <h3 class="feature-title">Manajemen Produk</h3>
+            <p class="feature-text">
+              Kelola inventaris produk dengan mudah melalui tampilan yang
+              intuitif dan responsif.
+            </p>
+            <a href="/view/products" class="access-btn">Akses</a>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#e74c3c"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 class="feature-title">Manajemen Pengguna</h3>
+            <p class="feature-text">
+              Pantau dan kelola pengguna sistem dengan kontrol akses yang aman
+              dan terorganisir.
+            </p>
+            <a href="/view/users" class="access-btn">Akses</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Access Section -->
+    <section class="quick-access">
+      <div class="container">
+        <h2 class="section-title">Akses Cepat</h2>
+        <div class="access-grid">
+          <div class="access-card">
+            <div class="access-icon">📦</div>
+            <h3 class="access-title">Tambah Produk</h3>
+            <a href="/view/products/create" class="access-btn">Mulai</a>
+          </div>
+          <div class="access-card">
+            <div class="access-icon">👥</div>
+            <h3 class="access-title">Tambah Pengguna</h3>
+            <a href="/view/users/create" class="access-btn">Mulai</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+      <div class="container">
+        <p class="copyright">
+          &copy; 2025 DashboardMS. Semua hak dilindungi undang-undang.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Mobile Menu Toggle Script -->
+    <script>
+      const menuBtn = document.querySelector(".mobile-menu-btn");
+      const navLinks = document.querySelector(".nav-links");
+
+      menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
