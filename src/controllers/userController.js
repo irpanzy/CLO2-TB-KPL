@@ -2,13 +2,21 @@ const UserService = require("../services/userService");
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await UserService.getAll();
-    res.status(200).json({
-      message: "Users fetched successfully",
-      data: users,
+    const { page = 1, limit = 8, name } = req.query;
+    const users = await UserService.getAll({
+      page: parseInt(page),
+      limit: parseInt(limit),
+      name,
     });
+    if (users.length > 0) {
+      return res.status(200).json({
+        message: "Users fetched successfully",
+        data: users,
+      });
+    }
+    return res.status(404).json({ message: "Users not found" });
   } catch (err) {
-    res
+    return res
       .status(500)
       .json({ error: "Failed to fetch users", details: err.message });
   }
@@ -18,17 +26,14 @@ const getUserById = async (req, res) => {
   try {
     const { id } = req.params;
     const user = await UserService.getById(parseInt(id));
-
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-
-    res.status(200).json({
-      message: "User fetched successfully",
-      data: user,
-    });
+    return res
+      .status(200)
+      .json({ message: "User fetched successfully", data: user });
   } catch (err) {
-    res
+    return res
       .status(500)
       .json({ error: "Failed to fetch user", details: err.message });
   }

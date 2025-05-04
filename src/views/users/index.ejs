@@ -74,6 +74,35 @@
         font-weight: bold;
       }
 
+      .pagination {
+        max-width: 1200px;
+        margin: 30px auto 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .pagination a {
+        padding: 8px 14px;
+        text-decoration: none;
+        color: #2d3e50;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background-color: white;
+      }
+
+      .pagination a.active {
+        background-color: #2d3e50;
+        color: white;
+        font-weight: bold;
+      }
+
+      .pagination a:hover {
+        background-color: #34495e;
+        color: white;
+      }
+
       footer {
         background-color: #2d3e50;
         color: #fff;
@@ -115,17 +144,35 @@
       <h1><%= title %></h1>
     </header>
     <div class="user-list">
-      <% users.forEach(user => { %>
-      <div class="user-item">
-        <img
-          src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png"
-          alt="<%= user.name %>"
-        />
-        <h3><%= user.name %></h3>
-        <p><%= user.email %></p>
-      </div>
-      <% }) %>
+      <% if (users.length > 0) { %>
+        <% users.forEach(user => { %>
+          <div class="user-item">
+            <img
+              src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_640.png"
+              alt="<%= user.name %>"
+            />
+            <h3><%= user.name %></h3>
+            <p><%= user.email %></p>
+          </div>
+        <% }) %>
+        
+      <% } else { %>
+        <p style="text-align: center">User tidak ditemukan.</p>
+      <% } %>
+      
+    <% if (totalPages > 1) { %>
+
+    <div class="pagination">
+      <% for (let i = 1; i <= totalPages; i++) { %>
+      <a
+        href="/view/users?page=<%= i %>"
+        class="<%= i === currentPage ? 'active' : '' %>"
+        ><%= i %></a
+      >
+      <% } %>
     </div>
+    <% } %>
+
     <footer>
       <p>
         &copy; <%= new Date().getFullYear() %> Toko Baju Online. Semua hak
