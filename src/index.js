@@ -7,7 +7,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
 // Routes
 const productRoute = require("./routes/productRoute");
@@ -47,14 +47,26 @@ app.use("/", productRoute);
 app.use("/", userRoute);
 
 // VIEW ROUTES
+app.get("/", (req, res) => {
+  res.render("index");
+});
 app.use("/", productRoute);
 app.use("/", userRoute);
 
-// Middleware to handle page not found and redirect to /error
+// Middleware to handle 404 errors (Page Not Found)
 app.use((req, res, next) => {
   res.status(404).render("error", {
-    title: "Error",
+    title: "404 - Page Not Found",
     error: "404 Page not found",
+  });
+});
+
+// Middleware to handle 500 errors (Server Errors)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).render("error", {
+    title: "500 - Server Error",
+    error: "500 Server Error",
   });
 });
 
