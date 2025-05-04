@@ -34,34 +34,6 @@ const getUserById = async (req, res) => {
   }
 };
 
-const getUserByEmail = async (req, res) => {
-  try {
-    const { email } = req.query;
-
-    // Validasi format email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!email || !emailRegex.test(email)) {
-      return res.status(400).json({ error: "Invalid or missing email format" });
-    }
-
-    const user = await UserService.getByEmail(email);
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    res.status(200).json({
-      message: "User fetched successfully",
-      data: user,
-    });
-  } catch (err) {
-    res.status(500).json({
-      error: "Failed to fetch user",
-      details: err.message,
-    });
-  }
-};
-
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -137,7 +109,6 @@ const deleteUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   getUserById,
-  getUserByEmail,
   createUser,
   updateUser,
   deleteUser,

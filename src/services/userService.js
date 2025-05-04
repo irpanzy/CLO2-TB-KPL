@@ -27,12 +27,6 @@ const UserService = {
     });
   },
 
-  getByEmail: async (email) => {
-    return await prisma.user.findUnique({
-      where: { email },
-    });
-  },
-
   update: async (id, { name, email, password }) => {
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
