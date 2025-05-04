@@ -12,8 +12,6 @@ const PORT = process.env.PORT || 3000;
 // Routes
 const productRoute = require("./routes/productRoute");
 const userRoute = require("./routes/userRoute");
-const UserService = require("./services/userService");
-const ProductService = require("./services/productService"); // Import ProductService di sini
 
 app.use(
   session({
@@ -45,75 +43,19 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static("public"));
 
 // API Routes
-app.use("/api/v1/products", productRoute);
-app.use("/api/v1/users", userRoute);
+app.use("/", productRoute);
+app.use("/", userRoute);
 
-// Web Routes (contoh jika ingin render HTML)
-app.get("/view/products", async (req, res) => {
-  try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = 8;
-    const category = req.query.category;
+// VIEW ROUTES
+app.use("/", productRoute);
+app.use("/", userRoute);
 
-    const { products, totalItems, totalPages } =
-      await ProductService.getAllWithPagination({ page, limit, category });
-
-    res.render("products/index", {
-      title: "Daftar Produk",
-      products,
-      totalProducts: totalItems, // ✅ tambahkan ini
-      currentPage: page,
-      totalPages,
-      successMessage: req.flash("success"),
-      errorMessage: req.flash("error"),
-    });
-  } catch (error) {
-    console.error("Gagal memuat produk:", error);
-    res.status(500).send("Terjadi kesalahan saat memuat produk.");
-  }
-});
-
-app.get("/view/users", async (req, res) => {
-  try {
-    const users = await UserService.getAll({});
-    res.render("users/index", {
-      title: "Daftar User",
-      users,
-    });
-  } catch (error) {
-    console.error("Error loading users:", error);
-    res.status(500).send("Terjadi kesalahan saat memuat produk.");
-  }
-});
-
-// Tampilkan form tambah produk
-app.get("/view/products/create", (req, res) => {
-  res.render("products/create", {
-    title: "Tambah Produk Baru",
+// Middleware to handle page not found and redirect to /error
+app.use((req, res, next) => {
+  res.status(404).render("error", {
+    title: "Error",
+    error: "404 Page not found",
   });
-});
-
-// Tampilkan form edit produk
-app.get("/view/products/:id/edit", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const product = await ProductService.getById(parseInt(id));
-    if (!product) {
-      return res.status(404).json({ error: "Product not found" });
-    }
-    res.render("products/edit", {
-      title: "Edit Produk",
-      product,
-    });
-  } catch (error) {
-    console.error("Error loading product:", error);
-    res.status(500).send("Terjadi kesalahan saat memuat produk.");
-  }
-});
-
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ error: "Endpoint not found" });
 });
 
 // Start server
