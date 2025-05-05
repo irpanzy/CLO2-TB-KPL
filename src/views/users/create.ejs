@@ -46,8 +46,8 @@
       }
 
       input[type="text"],
-      input[type="number"],
-      input[type="file"] {
+      input[type="email"],
+      input[type="password"] {
         width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
@@ -190,21 +190,18 @@
       </div>
 
       <form
-        action="/api/v1/products"
+        action="/api/v1/users"
         method="POST"
         enctype="multipart/form-data"
       >
         <label>Nama Users:</label>
         <input type="text" name="name" required />
 
-        <label>Harga:</label>
-        <input type="number" name="price" required />
+        <label>Email:</label>
+        <input type="email" name="email" required />
 
-        <label>Kategori:</label>
-        <input type="text" name="category" required />
-
-        <label>Gambar:</label>
-        <input type="file" name="image" required />
+        <label>Password:</label>
+        <input type="password" name="password" required />
 
         <button type="submit">Simpan</button>
       </form>
