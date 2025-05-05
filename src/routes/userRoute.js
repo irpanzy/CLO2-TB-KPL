@@ -36,25 +36,4 @@ router.get("/view/users", async (req, res) => {
   }
 });
 
-router.get("/view/users/create", (req, res) => {
-  res.render("users/create");
-});
-
-router.get("/view/users/:id/edit", async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await UserService.getById(parseInt(id));
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-    res.render("users/edit", {
-      title: "Edit User",
-      user,
-    });
-  } catch (error) {
-    console.error("Error loading user:", error);
-    res.status(500).send("Terjadi kesalahan saat memuat user.");
-  }
-});
-
 module.exports = router;
