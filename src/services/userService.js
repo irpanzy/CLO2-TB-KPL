@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const bcrypt = require("bcrypt");
+const saltRounds = 10;
 
 const UserService = {
   // Untuk API (Postman) — hanya ambil array produk
