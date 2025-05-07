@@ -247,7 +247,7 @@ Aplikasi ini adalah sistem manajemen produk dan pengguna berbasis web dengan ars
 
 ## 🌐 Dokumentasi View Routes
 
-<h5>📦 Product API</h5>
+<h5>📦 Products API</h5>
 
 | Method | URL API                 | Description                                         | By    |
 | ------ | ----------------------- | --------------------------------------------------- | ----- |
