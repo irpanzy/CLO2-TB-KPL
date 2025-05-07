@@ -14,7 +14,11 @@ router.post(
   productValidation,
   productController.createProduct
 );
-router.put("/api/v1/products/:id", upload.single("image"), productController.updateProduct);
+router.put(
+  "/api/v1/products/:id",
+  upload.single("image"),
+  productController.updateProduct
+);
 router.delete("/api/v1/products/:id", productController.deleteProduct);
 
 // VIEW ROUTES

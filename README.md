@@ -226,23 +226,23 @@ Aplikasi ini adalah sistem manajemen produk dan pengguna berbasis web dengan ars
 
 | Method | URL API              | Description                                           | Body / Params                                                            | By    |
 | ------ | -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------ | ----- |
-| GET    | /api/v1/products     | Mengambil daftar semua produk                         | -                                                                        | irpan |
-| GET    | /api/v1/products     | Mengambil daftar semua produk dengan pagination       | Query Params: `?page={pageNumber}&limit={pageSize}`                      | irpan |
+| GET    | /api/v1/products     | Mengambil daftar semua produk                         | -                                                                        | Danu |
+| GET    | /api/v1/products     | Mengambil daftar semua produk dengan pagination       | Query Params: `?page={pageNumber}&limit={pageSize}`                      | Irpan |
 | GET    | /api/v1/products/:id | Ambil produk berdasarkan ID                           | Path Param: `:id`                                                        | Firman |
-| GET    | /api/v1/products/    | Mengambil daftar produk berdasarkan kategori tertentu | Query Params: `?category={categoryName}`                                 | irpan |
+| GET    | /api/v1/products/    | Mengambil daftar produk berdasarkan kategori tertentu | Query Params: `?category={categoryName}`                                 | Frido |
 | POST   | /api/v1/products     | Tambah produk baru                                    | Body (form-data): `{ name, price, category, image }`                     | Firman |
-| PUT    | /api/v1/products/:id | Ubah data produk berdasarkan ID                       | Path Param: `:id` + Body (form-data): `{ name, price, category, image }` | irpan |
-| DELETE | /api/v1/products/:id | Hapus produk berdasarkan ID                           | Path Param: `:id`                                                        | irpan |
+| PUT    | /api/v1/products/:id | Ubah data produk berdasarkan ID                       | Path Param: `:id` + Body (form-data): `{ name, price, category, image }` | Irpan |
+| DELETE | /api/v1/products/:id | Hapus produk berdasarkan ID                           | Path Param: `:id`                                                        | James |
 
 <h5>🧑‍💼 Users API</h5>
 
 | Method | URL API           | Description                                   | Body / Params                                                     | By    |
 | ------ | ----------------- | --------------------------------------------- | ----------------------------------------------------------------- | ----- |
-| GET    | /api/v1/users     | Mengambil daftar semua user                   | -                                                                 | irpan |
-| GET    | /api/v1/users     | Mengambil daftar semua user dengan pagination | Query Params: `?page={pageNumber}&limit={pageSize}`               | irpan |
+| GET    | /api/v1/users     | Mengambil daftar semua user                   | -                                                                 | James |
+| GET    | /api/v1/users     | Mengambil daftar semua user dengan pagination | Query Params: `?page={pageNumber}&limit={pageSize}`               | Irpan |
 | GET    | /api/v1/users/:id | Ambil user berdasarkan ID                     | Path Param: `:id`                                                 | Firman |
-| POST   | /api/v1/users     | Tambah user baru                              | Body (form-data): `{ name, email, password }`                     | irpan |
-| PUT    | /api/v1/users/:id | Ubah data user berdasarkan ID                 | Path Param: `:id` + Body (form-data): `{ name, email, password }` | irpan |
+| POST   | /api/v1/users     | Tambah user baru                              | Body (form-data): `{ name, email, password }`                     | Irpan |
+| PUT    | /api/v1/users/:id | Ubah data user berdasarkan ID                 | Path Param: `:id` + Body (form-data): `{ name, email, password }` | Danu |
 | DELETE | /api/v1/users/:id | Hapus user berdasarkan ID                     | Path Param: `:id`                                                 | Firman |
 
 ## 🌐 Dokumentasi View Routes
@@ -251,16 +251,12 @@ Aplikasi ini adalah sistem manajemen produk dan pengguna berbasis web dengan ars
 
 | Method | URL API                 | Description                                         | By    |
 | ------ | ----------------------- | --------------------------------------------------- | ----- |
-| GET    | /view/products          | Tampilkan daftar user (dengan pagination dan limit) | irpan |
-| GET    | /view/products          | Form tambah produk                                  | irpan |
-| GET    | /view/products/:id/edit | Form edit produk berdasarkan ID                     | irpan |
+| GET    | /view/products          | Tampilkan daftar user (dengan pagination dan limit) | Irpan |
+| GET    | /view/products/create   | Form tambah produk                                  | Irpan |
+| GET    | /view/products/:id/edit | Form edit produk berdasarkan ID                     | Irpan |
 
 <h5>🧑‍💼 Users API</h5>
 
 | Method | URL API     | Description                                         | By    |
 | ------ | ----------- | --------------------------------------------------- | ----- |
-| GET    | /view/users | Tampilkan daftar user (dengan pagination dan limit) | irpan |
-
-```
-
-```
+| GET    | /view/users | Tampilkan daftar user (dengan pagination dan limit) | Frido |

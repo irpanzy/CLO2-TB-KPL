@@ -289,7 +289,6 @@
 
     <div class="action-bar">
       <p>Total User: <%= totalUsers %></p>
-
     </div>
     <% if (users.length > 0) { %>
 
@@ -304,15 +303,11 @@
         <p><strong>Email:</strong> <%= user.email %></p>
 
         <div class="action-buttons">
-          <form action="/view/users/<%= user.id %>/edit" method="GET">
-            <button type="submit" class="edit-btn">Edit</button>
-          </form>
+          <form action="/view/users/<%= user.id %>/edit" method="GET"></form>
           <form
             action="/api/v1/users/<%= user.id %>?_method=DELETE"
             method="POST"
-          >
-            <button type="submit" class="delete-btn">Hapus</button>
-          </form>
+          ></form>
         </div>
       </div>
       <% }) %>
