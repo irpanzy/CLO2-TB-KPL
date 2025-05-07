@@ -228,9 +228,9 @@ Aplikasi ini adalah sistem manajemen produk dan pengguna berbasis web dengan ars
 | ------ | -------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------ | ----- |
 | GET    | /api/v1/products     | Mengambil daftar semua produk                         | -                                                                        | irpan |
 | GET    | /api/v1/products     | Mengambil daftar semua produk dengan pagination       | Query Params: `?page={pageNumber}&limit={pageSize}`                      | irpan |
-| GET    | /api/v1/products/:id | Ambil produk berdasarkan ID                           | Path Param: `:id`                                                        | irpan |
+| GET    | /api/v1/products/:id | Ambil produk berdasarkan ID                           | Path Param: `:id`                                                        | Firman |
 | GET    | /api/v1/products/    | Mengambil daftar produk berdasarkan kategori tertentu | Query Params: `?category={categoryName}`                                 | irpan |
-| POST   | /api/v1/products     | Tambah produk baru                                    | Body (form-data): `{ name, price, category, image }`                     | irpan |
+| POST   | /api/v1/products     | Tambah produk baru                                    | Body (form-data): `{ name, price, category, image }`                     | Firman |
 | PUT    | /api/v1/products/:id | Ubah data produk berdasarkan ID                       | Path Param: `:id` + Body (form-data): `{ name, price, category, image }` | irpan |
 | DELETE | /api/v1/products/:id | Hapus produk berdasarkan ID                           | Path Param: `:id`                                                        | irpan |
 
@@ -240,10 +240,10 @@ Aplikasi ini adalah sistem manajemen produk dan pengguna berbasis web dengan ars
 | ------ | ----------------- | --------------------------------------------- | ----------------------------------------------------------------- | ----- |
 | GET    | /api/v1/users     | Mengambil daftar semua user                   | -                                                                 | irpan |
 | GET    | /api/v1/users     | Mengambil daftar semua user dengan pagination | Query Params: `?page={pageNumber}&limit={pageSize}`               | irpan |
-| GET    | /api/v1/users/:id | Ambil user berdasarkan ID                     | Path Param: `:id`                                                 | irpan |
+| GET    | /api/v1/users/:id | Ambil user berdasarkan ID                     | Path Param: `:id`                                                 | Firman |
 | POST   | /api/v1/users     | Tambah user baru                              | Body (form-data): `{ name, email, password }`                     | irpan |
 | PUT    | /api/v1/users/:id | Ubah data user berdasarkan ID                 | Path Param: `:id` + Body (form-data): `{ name, email, password }` | irpan |
-| DELETE | /api/v1/users/:id | Hapus user berdasarkan ID                     | Path Param: `:id`                                                 | irpan |
+| DELETE | /api/v1/users/:id | Hapus user berdasarkan ID                     | Path Param: `:id`                                                 | Firman |
 
 ## 🌐 Dokumentasi View Routes
 
