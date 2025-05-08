@@ -22,16 +22,22 @@
         color: white;
         text-align: center;
         padding: 1.5rem;
-        font-size: 1.2rem;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px 20px;
       }
 
       .action-bar {
-        max-width: 1200px;
-        margin: 20px auto 0;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 30px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
       }
 
       .add-button {
@@ -53,23 +59,20 @@
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         gap: 20px;
-        padding: 30px;
-        max-width: 1200px;
-        margin: 0 auto;
       }
 
       .user-item {
-        background-color: white;
+        background-color: #ffffff;
         padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(45, 62, 80, 0.1);
         text-align: center;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
       }
 
       .user-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transform: translateY(-5px);
+        box-shadow: 0 6px 20px rgba(45, 62, 80, 0.15);
       }
 
       .user-item img {
@@ -84,49 +87,44 @@
         font-size: 1.1rem;
         margin: 10px 0;
         font-weight: bold;
-        color: #333;
+        color: #2d3e50;
       }
 
       .user-item p {
-        color: #777;
+        color: #555;
         font-size: 0.9rem;
         margin-bottom: 8px;
-      }
-
-      .price {
-        color: #e74c3c;
-        font-weight: bold;
       }
 
       .action-buttons {
         display: flex;
         justify-content: center;
-        gap: 8px;
-        margin-top: 10px;
+        gap: 10px;
         flex-wrap: wrap;
+        margin-top: 12px;
       }
 
       .action-buttons button {
-        padding: 5px 10px;
+        padding: 6px 12px;
+        font-size: 0.85rem;
         border: none;
-        border-radius: 4px;
+        border-radius: 6px;
         color: white;
         cursor: pointer;
       }
 
-      .edit-btn {
-        background-color: #2980b9;
+      .delete-btn {
+        background-color: #ff6b6b; /* Merah lembut untuk tombol hapus */
       }
 
-      .delete-btn {
-        background-color: #e74c3c;
+      .delete-btn:hover {
+        background-color: #e55a5a; /* Merah sedikit lebih gelap untuk efek hover */
       }
 
       .pagination {
-        max-width: 1200px;
-        margin: 30px auto 0;
         display: flex;
         justify-content: center;
+        margin-top: 30px;
         gap: 10px;
         flex-wrap: wrap;
       }
@@ -152,13 +150,19 @@
       }
 
       footer {
-        background-color: #2d3e50;
-        color: #fff;
+        background-color: #1f2937;
         text-align: center;
-        padding: 1.2rem;
-        font-size: 1.2rem;
-        margin-top: 40px;
-        box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+        font-size: 1rem;
+      }
+
+      footer a {
+        color: #93c5fd;
+        text-decoration: none;
+        font-weight: 500;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
       }
 
       /* Toast Notification styles */
@@ -227,32 +231,15 @@
         }
       }
 
-      /* Mobile Responsiveness */
       @media (max-width: 768px) {
-        header {
-          font-size: 1.2rem;
-        }
-
         .user-list {
           grid-template-columns: 1fr 1fr;
-        }
-
-        .user-item {
-          padding: 15px;
-        }
-
-        .toast-container {
-          width: 280px;
         }
       }
 
       @media (max-width: 480px) {
         .user-list {
           grid-template-columns: 1fr;
-        }
-
-        .user-item {
-          padding: 12px;
         }
 
         .toast-container {
@@ -264,11 +251,7 @@
     </style>
   </head>
   <body>
-    <header>
-      <h1><%= title %></h1>
-    </header>
-
-    <!-- Toast Notifications Container -->
+    <!-- Toast Notifications -->
     <div class="toast-container" id="toastContainer">
       <% if (locals.success_msg && locals.success_msg.length > 0) { %>
       <div class="toast toast-success" id="successToast">
@@ -287,54 +270,79 @@
       <% } %>
     </div>
 
-    <div class="action-bar">
-      <p>Total User: <%= totalUsers %></p>
-    </div>
-    <% if (users.length > 0) { %>
-
-    <div class="user-list">
-      <% users.forEach(user => { %>
-      <div class="user-item">
-        <img
-          src="https://i.pinimg.com/236x/03/5c/7c/035c7c88a6331c0768810a84cb5da799.jpg"
-          alt="<%= user.name %>"
-        />
-        <h3><%= user.name %></h3>
-        <p><strong>Email:</strong> <%= user.email %></p>
-
-        <div class="action-buttons">
-          <form action="/view/users/<%= user.id %>/edit" method="GET"></form>
-          <form
-            action="/api/v1/users/<%= user.id %>?_method=DELETE"
-            method="POST"
-          ></form>
-        </div>
+    <div class="container">
+      <div class="action-bar">
+        <p>Total Pengguna: <%= totalUsers %></p>
       </div>
-      <% }) %>
-    </div>
-    <% } else { %>
-    <p style="text-align: center">Tidak ada user ditemukan.</p>
-    <% } %> <% if (totalPages > 1) { %>
-    <div class="pagination">
-      <% for (let i = 1; i <= totalPages; i++) { %>
-      <a
-        href="/view/users?page=<%= i %>"
-        class="<%= i === currentPage ? 'active' : '' %>"
-        ><%= i %></a
-      >
+
+      <% if (users.length > 0) { %>
+      <div class="user-list">
+        <% users.forEach(user => { %>
+        <div class="user-item">
+          <img
+            src="https://i.pinimg.com/236x/03/5c/7c/035c7c88a6331c0768810a84cb5da799.jpg"
+            alt="<%= user.name %>"
+          />
+          <h3><%= user.name %></h3>
+          <p><strong>Email:</strong> <%= user.email %></p>
+          <div class="action-buttons">
+            <form
+              action="/api/v1/users/<%= user.id %>?_method=DELETE"
+              method="POST"
+            >
+              <button type="submit" class="delete-btn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-trash-icon lucide-trash"
+                >
+                  <path d="M3 6h18" />
+                  <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6" />
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <p style="text-align: center; margin-top: 30px">
+        Tidak ada user ditemukan.
+      </p>
+      <% } %> <% if (totalPages > 1) { %>
+      <div class="pagination">
+        <% for (let i = 1; i <= totalPages; i++) { %>
+        <a
+          href="/view/users?page=<%= i %>"
+          class="<%= i === currentPage ? 'active' : '' %>"
+          ><%= i %></a
+        >
+        <% } %>
+      </div>
       <% } %>
     </div>
-    <% } %>
 
     <footer>
-      <p>
-        &copy; <%= new Date().getFullYear() %> Toko Baju Online. Semua hak
-        dilindungi.
-      </p>
+      <div class="container mx-auto text-center">
+        <p style="color: white">
+          &copy; 2025 Sistem Manajemen Dashboard. Semua Hak Dilindungi.
+        </p>
+        <p>
+          <a href="#">Kebijakan Privasi</a> <a style="color: white">|</a>
+          <a href="#">Ketentuan Layanan</a>
+        </p>
+      </div>
     </footer>
 
     <script>
-      // Fungsi untuk menutup toast notifikasi secara manual
       function closeToast(id) {
         const toast = document.getElementById(id);
         if (toast) {
@@ -345,7 +353,6 @@
         }
       }
 
-      // Hapus toast secara otomatis setelah 3 detik
       document.addEventListener("DOMContentLoaded", function () {
         const toasts = document.querySelectorAll(".toast");
         if (toasts.length > 0) {
